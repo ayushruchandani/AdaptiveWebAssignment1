@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6885a0fb-a22f-49ba-8f48-da0fcb399c61" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/serve-favicon/package.json" afterPath="$PROJECT_DIR$/node_modules/serve-favicon/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +23,12 @@
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="819">
-              <caret line="39" column="3" lean-forward="false" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
-              <folding />
+              <caret line="40" column="3" lean-forward="false" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+              <folding>
+                <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+                <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+                <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -381,12 +386,12 @@
       <workItem from="1504567343635" duration="17128000" />
       <workItem from="1504633668955" duration="42405000" />
       <workItem from="1504777017785" duration="2872000" />
-      <workItem from="1504806120262" duration="24000" />
+      <workItem from="1504806120262" duration="623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75167000" />
+    <option name="totallyTimeSpent" value="75766000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -426,7 +431,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
           <caret line="39" column="3" lean-forward="false" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
-          <folding />
+          <folding>
+            <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -480,7 +489,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -541,7 +554,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-          <folding />
+          <folding>
+            <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -587,7 +604,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="28" />
-          <folding />
+          <folding>
+            <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -771,8 +792,12 @@
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
-          <caret line="39" column="3" lean-forward="false" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
-          <folding />
+          <caret line="40" column="3" lean-forward="false" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+          <folding>
+            <marker date="1504806738878" expanded="true" signature="371:580" ph="{&quot;client-sessions&quot;: &quot;^0.8.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="603:876" ph="{&quot;mocha&quot;: &quot;^2.1.0&quot;...}" />
+            <marker date="1504806738878" expanded="true" signature="891:918" ph="{&quot;node&quot;: &quot;&gt;=0.8.0&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
