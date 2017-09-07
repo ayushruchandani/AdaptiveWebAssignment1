@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Home Page</title>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+
+  <script src="/js/jsgrid.js"></script>
+  <link type="text/css" rel="stylesheet" href="/css/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="/css/jsgrid-theme.min.css" />
+
+  <script type="text/javascript" src="/js/jsgrid.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+</head>
+<body>
+  <div class="module form-home">
+    <form action="/home" method="get" id="homeForm">
+      <div class="row">
+        <div class="col-sm-10 pen-title" align="center">
+          <h1 id="head"></h1>
+        </div>
+        <div class="col-sm-2">
+          <input class="form-button" type="button" style="margin: 20px" value="Logout" id="logout">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" align="center">
+          <table class="w3-table-all" border="2">
+            <tr class="w3-light-grey">
+              <th colspan="2">
+                <h2>Profile Details</h2>
+              </th>
+            </tr>
+            <tr class="w3-hover-black">
+              <th>Id</th>
+              <td><h5 id="id"></h5></td>
+            </tr>
+            <tr class="w3-hover-black">
+              <th>Name</th>
+              <td><h5 id="name"></h5></td>
+            </tr>
+            <tr class="w3-hover-black">
+              <th>Email Id</th>
+              <td><h5 id="email"></h5></td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-sm-6" align="center">
+          <div id="logGrid"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <br/>
+        <br/>
+      </div>
+
+      <div class="row">
+          <div class="col-xs-4"><br/></div>
+          <div class="col-xs-4" style="text-align: center;">
+            <a align="center" class="form-link" href="https://stackoverflow.com/questions/tagged/java?sort=frequent&pageSize=15">Navigate to Stack Overflow Page</a>
+          </div>
+          <div class="col-xs-4"></div>
+      </div>
+
+      <div class="row">
+        <br/>
+        <br/>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <table class="w3-table-all">
+            <tr class="w3-hover-green">
+              <th>Action</th>
+              <th>Reason for logging this action</th>
+            </tr>
+            <tr class="w3-hover-black">
+              <td>Click</td>
+              <td>This action is tracked so as to know what type of links and questions/tags is the user clicking. It is also used to track when user logs into the Stack Overflow website. It explains what topics is user intereted in.</td>
+            </tr>
+            <tr class="w3-hover-black">
+              <td>Post</td>
+              <td>This action is tracked to explain what questions is user posting on stack overflow. It can determine the difficulty level of the question.</td>
+            </tr>
+            <tr class="w3-hover-black">
+              <td>Answer</td>
+              <td>This action is tracked to maintain a record of how many answers user has given and to what all question has the user answered to. </td>
+            </tr>
+            <tr class="w3-hover-black">
+              <td>Bookmark</td>
+              <td>This action tracks all those questions which user has marked as favorite. It keeps a track of all such questions which user finds interesting or knowledge worthy.</td>
+            </tr>
+            <tr class="w3-hover-black">
+              <td>Vote up/down</td>
+              <td>This action tracks the user behavior of marking vote ups or vote downs. It keeps a record of all such questions or answers to which the user has marked a vote up or vote down.</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-sm-6">
+          <div id="behaviorlog-grid"></div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      $("#logout").click(function () {
+        $.ajax({
+          url:'/logout',
+          type: 'GET',
+          success: function (data) {
+            window.location.href = "index.html";
+          }
+        });
+      });
+      $.ajax({
+        url: '/home',
+        dataType: 'json',
+        type: 'GET',
+        success: function (data) {
+          $("#id").text(data.data[0].id);
+          $("#name").text(data.data[0].name);
+          $("#email").text(data.data[0].email);
+          $("#head").text("Welcome "+data.data[0].name);
+        }
+      });
+
+
+      $.ajax({
+        type: "GET",
+        url: "/behaviorLogHistory",
+        dataType: "json",
+        success: function (data) {
+          $("#behaviorlog-grid").jsGrid({
+            autoload: true,
+            width: "100%",
+            paging: true,
+            pageSize: 5,
+            pageLoading: false,
+            noDataContent: "No log history",
+            controller: {
+              loadData: function (filter) {
+                return data;
+              }
+            },
+            fields: [{name: "id", type:"text", width:100, validate: "required", title: "Username", headercss: "gridSortIndicator", editing: false, align:"left"},
+              {name: "action", type:"text", width:100, validate: "required", title: "Action Performed", headercss: "gridSortIndicator", editing: false, align:"center"},
+              {name: "desc", type:"text", width:100, validate: "required", title: "Description", headercss: "gridSortIndicator", editing: false, align:"center"},
+              {name: "link", type:"text", width:100, validate: "required", title: "Content Accessed", headercss: "gridSortIndicator", editing: false, align:"center"},
+            ]
+          });
+        }
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/logHistory",
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          $("#logGrid").jsGrid({
+            autoload: true,
+            width: "100%",
+            paging: true,
+            pageSize: 5,
+            pageLoading: false,
+            noDataContent: "No log history",
+            controller: {
+              loadData: function (filter) {
+                return data;
+              }
+            },
+            fields: [{name: "id", type:"text", width:100, validate: "required", title: "Username", headercss: "gridSortIndicator", editing: false, align:"left"},
+              {name: "date", type:"text", width:100, validate: "required", title: "Login Date", headercss: "gridSortIndicator", editing: false, align:"center"},
+              {name: "time", type:"text", width:100, validate: "required", title: "Login Time", headercss: "gridSortIndicator", editing: false, align:"center"},
+            ]
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
