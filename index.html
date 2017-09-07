@@ -31,7 +31,7 @@
     <!-- Form Module-->
     <div class="module form-module">
         <div class="toggle"><i class="fa fa-times fa-pencil"></i>
-            <div class="tooltip">Click to Sign Up</div>
+            <div id="click" class="tooltip">Click to Sign Up</div>
         </div>
         <div class="form">
             <h2>Login to your account</h2>
@@ -58,6 +58,11 @@
 
     <script>
         $(document).ready(function(){
+          $("#login").keyup(function(event){
+            if(event.keyCode == 13){
+              $("#login").click();
+            }
+          });
           $("#login").click(function(){
             var id = $('#id').val();
             var password = $('#password').val();
@@ -124,7 +129,7 @@
               xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                   alert("Account Created. Continue with login");
-                  //window.location.href = "index.html";
+                  window.location.href = "index.html";
                 }
               };
               xmlhttp.open("POST", "/register");

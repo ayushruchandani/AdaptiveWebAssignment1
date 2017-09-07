@@ -43,14 +43,21 @@ app.get('/', (request, response) => {
 });
 
 app.get('/home', (request, response) =>{
-  MongoClient.connect(url, function (err, db) {
-    if(err) throw err;
-    var query = {id: request.session.id};
-    db.collection("users").find(query).toArray(function(err, result) {
+  console.log(request.session.id);
+  if(request.session.id === undefined){
+    response.redirect('/');
+  }
+  else{
+    MongoClient.connect(url, function (err, db) {
+      if(err) throw err;
+      var query = {id: request.session.id};
+      db.collection("users").find(query).toArray(function(err, result) {
         response.json({"data": result});
         db.close();
       });
-  });
+    });
+  }
+
 });
 
 
@@ -77,34 +84,36 @@ app.get('/behaviorLogHistory', (request, response) =>{
 });
 
 app.post('/login', (request, response)=> {
-  id = request.body.id;
-  password = request.body.password;
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    var query = { id: id ,password: password };
-    db.collection("users").find(query).toArray(function (err, result) {
-      if (err) response.json({ "response": "Failed" });
-      if (result.length == 0) {
-        console.log(result);
-        response.json(result);
-        console.log('Logged in Failed');
-      }
-      else {
-        //response.json({"response": "Success"});
-        console.log('Logged in successfully');
-        request.session.id = id;
-        var currentDate = new Date();
-        var date = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
-        var time = currentDate.getHours() +":"+ currentDate.getMinutes()+":"+currentDate.getSeconds();
-        var insertQuery = {id:id, date: date, time: time};
-        db.collection("user_login_history").insertOne(insertQuery, function (err, res) {
-          if(err) throw err;
-          db.close();
-        });
-        response.redirect('/home');
-      }
+  if(!request.session.user){
+    id = request.body.id;
+    password = request.body.password;
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      var query = { id: id ,password: password };
+      db.collection("users").find(query).toArray(function (err, result) {
+        if (err) response.json({ "response": "Failed" });
+        if (result.length == 0) {
+          console.log(result);
+          response.json(result);
+          console.log('Logged in Failed');
+        }
+        else {
+          //response.json({"response": "Success"});
+          console.log('Logged in successfully');
+          request.session.id = id;
+          var currentDate = new Date();
+          var date = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
+          var time = currentDate.getHours() +":"+ currentDate.getMinutes()+":"+currentDate.getSeconds() + " UTC";
+          var insertQuery = {id:id, date: date, time: time};
+          db.collection("user_login_history").insertOne(insertQuery, function (err, res) {
+            if(err) throw err;
+            db.close();
+          });
+          response.redirect('/home');
+        }
+      });
     });
-  });
+  }
 });
 
 app.get('/logout', (request, response)=> {
