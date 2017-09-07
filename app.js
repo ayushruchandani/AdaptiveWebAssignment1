@@ -142,9 +142,10 @@ app.post('/behaviorlogs', (request, response)=> {
   action = request.body.action;
   link = request.body.link;
   desc = request.body.desc;
+  timestamp = request.body.timestamp;
   MongoClient.connect(url, function(err, db){
     if(err) throw err;
-    var query = {id:id, action: action, link:link, desc:desc};
+    var query = {id:id, action: action, link:link, desc:desc, timestamp:timestamp};
     db.collection("user_behavior_logs").insertOne(query, function (err, res) {
       if(err) throw err;
       response.json({"response": "success"});
