@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore Logged Data</title>
+  <script src="https://www.google.com/jsapi"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+      .bubbleChart {
+        min-width: 100px;
+        max-width: 700px;
+        height: 700px;
+        margin: 0 auto;
+      }
+      .bubbleChart svg{
+        background: #000000;
+      }
+    </style>
+
+  <script>
+
+  </script>
+</head>
+<body>
+<br/>
+<div class="row">
+  <br/><br/>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+  </div>
+</div>
+<div class="row">
+  <br/><br/>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="w3-table-all">
+      <tr class="w3-hover-green">
+        <th>Interaction</th>
+        <th>Pattern Finding</th>
+      </tr>
+      <tr class="w3-hover-black">
+        <td>Tag Clicks</td>
+        <td>Based on what tags the users are clicking on the stack overflow page, data is collected. This data is represented using a pie chart. From this pie chart, the most popular tag amongst all the users can be figured out. It is based on how many times the users are clicking on that particular tag. For example, from the data available, it could be seen that string was one of the most clicked tags. Similarly, after clicking on a particular item on pie chart, it can be seen that how many times an individual user has browsed that tag. Hence, how popular is that tag amongst individual users can also be identified.</td>
+      </tr>
+      <tr class="w3-hover-black">
+        <td>Question Clicks</td>
+        <td>The pattern of most popular question amongst all the users can be identified use=ing this. Also, how frequently an individual user browses the question can also be figured out. On clicking the bars of user data, how many times has the user browsed a particular question can be recognised. Hence, it signifies which are the popular questions amongst overall users and individual users. </td>
+      </tr>
+      <tr class="w3-hover-black">
+        <td>Vote Up</td>
+        <td>We can figure out the most justified questions and answers on the stack overflow page using this interaction. It visualizes the count of vote ups a particular question gets.  </td>
+      </tr>
+      <tr class="w3-hover-black">
+        <td>Bookmark</td>
+        <td>The most popular question amongst all users can be figured out. It tracks the data of bookmarked questions by users. Hence, the most popular or viewed question can be figured out. Also, we can toggle the data based on the counts of bookmark. >5 count visualizes the more popular question and <5 count visualize less popular questions. </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $.ajax({
+      url: '/visualizeClick',
+      dataType: 'json',
+      type: 'GET',
+      success: function (data) {
+        var result = [];
+        var descs = [];
+        $.each(data, function (index, value) {
+          if (descs.indexOf(value.desc) === -1) {
+            if(value.desc == "Tag clicked" || value.desc == "Question clicked" || value.desc == "Question marked as favorite" || value.desc == "Question or answer voted up"){
+              descs.push(value.desc);
+            }
+          }
+        });
+        for (let i = 0; i < descs.length; i++) {
+          let obj = {};
+          let desc = descs[i];
+          obj["desc"] = desc;
+          for (let j = 0; j < data.length; j++) {
+            if (data[j].desc === desc) {
+              if (!(obj.hasOwnProperty(data[j].desc))) {
+                obj[data[j].desc] = 1
+              }
+              else{
+                obj[data[j].desc] += 1;
+              }
+              var object = {
+                desc: desc,
+                count: obj[data[j].desc]
+              };
+            }
+          }
+          result.push(object);
+        }
+        drawChart(result);
+      }
+    });
+  });
+
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart(result) {
+    var res = [['Description', 'Count']];
+    for(var i in result){
+      res.push([result[i].desc, result[i].count]);
+    }
+
+    var data = google.visualization.arrayToDataTable(res);
+
+    var options = {
+      title: 'Visualizing the data on click action',
+      pieHole: 0.4,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+
+    google.visualization.events.addListener(chart, 'select', selectHandler);
+
+    function selectHandler(e) {
+      var b = chart.getSelection();
+      var desc = result[b[0].row].desc;
+      if(desc == "Tag clicked" || desc == "Question clicked"){
+          window.open(
+              'exploretags.html',
+              '_blank'
+          );
+      }
+      else if(desc == "Question marked as favorite" || desc == "Question or answer voted up"){
+        window.open(
+          'explorevote.html',
+          '_blank'
+        );
+      }
+    }
+  }
+</script>
+</html>

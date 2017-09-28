@@ -220,6 +220,31 @@ app.get('/visualizeVotes', (request, response)=>{
   });
 });
 
+app.get('/visualizeClick', (request, response)=>{
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {
+      $or:[
+        {action:"Click"},
+        {action:"Bookmark"},
+        {action:"Vote Up"}
+      ]
+    }
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var desc = result[i].desc;
+        var obj = {
+          desc: desc,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
 app.get('/visualizeBookmark', (request, response)=>{
   var string = "Question marked as favorite";
   var data = [];
