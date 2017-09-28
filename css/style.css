@@ -215,6 +215,19 @@ body {
   transition: 0.3s ease;
 }
 
+.nav-link {
+  border-radius: 10px;
+  cursor: pointer;
+  background: #33b5e5;
+  width: 50%;
+  border: 0;
+  color: #ffffff;
+  padding: 10px 15px;
+  margin: 0 100px 0;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
 .form-button button:hover {
   background: #178ab4;
 }

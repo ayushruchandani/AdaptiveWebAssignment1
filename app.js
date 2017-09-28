@@ -83,6 +83,165 @@ app.get('/behaviorLogHistory', (request, response) =>{
   });
 });
 
+app.get('/visualizeLogin', (request, response)=>{
+  var dict = {1: "Friday", 2: "Saturday", 3:"Sunday", 4: "Monday", 5:"Tuesday", 6:"Wednesday", 7:"Thursday", 8:"Friday", 9:"Saturday", 10:"Sunday", 11:"Monday", 12:"Tuesday",
+              13:"Wednesday", 14:"Thursday", 15:"Friday", 16:"Saturday", 17:"Sunday", 18:"Monday", 19:"Tuesday", 20:"Wednesday", 21:"Thursday", 22:"Friday", 23:"Saturday", 24:"Sunday", 25:"Monday", 26:"Tuesday", 27:"Wednesday", 28:"Thursday", 29:"Friday",
+              30:"Saturday", 31:"Sundays"};
+  var data = [];
+  var monthArr = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    db.collection("user_login_history").find().toArray(function (err, result) {
+      for(var i=0; i<result.length; i++) {
+        var m = result[i].date.split("/");
+        var date = dict[m[1]];
+        var user = result[i].id;
+        var obj = {
+          user: user,
+          date: date
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+
+app.get('/visualizeTags', (request, response)=>{
+  var string = "Tag clicked";
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {desc:string};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var link = result[i].link;
+        var user = result[i].id;
+        var obj = {
+          user: user,
+          link: link,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+app.get('/visualizeQuestion', (request, response)=>{
+  var string = "Question clicked";
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {desc:string};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var link = result[i].link;
+        var user = result[i].id;
+        var obj = {
+          user: user,
+          link: link,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+app.get('/visualizeTagName', (request, response)=>{
+  var tag = request.query.tagName;
+
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {link:tag};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var user = result[i].id;
+        var obj = {
+          user: user,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+app.get('/visualizeUserQuestions', (request, response)=>{
+  var user = request.query.user;
+  var string = "Question clicked";
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {id:user, desc:string};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      if (err) throw err;
+      for(var i=0;i<result.length;i++){
+        var user = result[i].id;
+        var link = result[i].link;
+        var obj = {
+          user: user,
+          link: link
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+app.get('/visualizeVotes', (request, response)=>{
+  var string = "Question or answer voted up";
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {desc:string};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var link = result[i].link;
+        var user = result[i].id;
+        var obj = {
+          user: user,
+          link: link,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
+app.get('/visualizeBookmark', (request, response)=>{
+  var string = "Question marked as favorite";
+  var data = [];
+  MongoClient.connect(url,function (err, db) {
+    if (err) throw err;
+    var query = {desc:string};
+    db.collection("user_behavior_logs").find(query).toArray(function(err, result) {
+      for(var i=0;i<result.length;i++){
+        var link = result[i].link;
+        var user = result[i].id;
+        var obj = {
+          user: user,
+          link: link,
+        };
+        data.push(obj);
+      }
+      response.json(data);
+      db.close();
+    });
+  });
+});
+
 app.post('/login', (request, response)=> {
   if(!request.session.user){
     id = request.body.id;
